@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback } from 'react';
 import {
-  BookOpen, Star, Trophy, ChevronRight, ChevronLeft, RotateCcw,
+  Star, ChevronRight, ChevronLeft, RotateCcw,
   Eye, HelpCircle, CheckCircle2,
   XCircle, Globe, Compass, CloudRain, Zap,
   TreePine, Sun, ArrowRight, Sparkles,
