@@ -42,6 +42,7 @@ interface TopicData {
   color: string;
   gradient: string;
   icon: React.ReactNode;
+  videoUrl?: string; // YouTube video URL
   facts: string[];
   quiz: QuizQuestion[];
   match: MatchPair[];
@@ -60,6 +61,7 @@ const topicsData: TopicData[] = [
     color: "#FF6B6B",
     gradient: "from-rose-400 to-orange-400",
     icon: <Users className="w-8 h-8" />,
+    videoUrl: "https://www.youtube.com/watch?v=lHcckx_3Njk", // Misol uchun
     facts: [
       "Har bir insonning ismi va familiyasi bor",
       "Inson dunyodagi eng buyuk mo'jizadir",
@@ -105,6 +107,7 @@ const topicsData: TopicData[] = [
     color: "#4ECDC4",
     gradient: "from-teal-400 to-cyan-400",
     icon: <Eye className="w-8 h-8" />,
+    videoUrl: "https://www.youtube.com/watch?v=SQksv4Is4YI", // Misol uchun
     facts: [
       "Ko'z - ko'rish a'zosi, atrofimizni ko'rishimiz uchun",
       "Quloq - eshitish a'zosi, tovushlarni eshitishimiz uchun",
@@ -150,6 +153,7 @@ const topicsData: TopicData[] = [
     color: "#667eea",
     gradient: "from-indigo-500 to-purple-600",
     icon: <Globe className="w-8 h-8" />,
+    videoUrl: "https://www.youtube.com/watch?v=KkIsKpkq3q0", // Misol uchun
     facts: [
       "Yer - Quyosh tizimidagi 3-sayyora",
       "Quyosh tizimida 8 ta sayyora bor",
@@ -195,6 +199,7 @@ const topicsData: TopicData[] = [
     color: "#FF9F1C",
     gradient: "from-amber-400 to-orange-500",
     icon: <MapPin className="w-8 h-8" />,
+    videoUrl: "https://www.youtube.com/watch?v=OyvBY4t4FBU", // Misol uchun
     facts: [
       "Yer yuzida 6 ta yirik materik bor",
       "Eng katta materik - Yevrosiyo",
@@ -240,6 +245,7 @@ const topicsData: TopicData[] = [
     color: "#52B788",
     gradient: "from-emerald-400 to-teal-500",
     icon: <Sun className="w-8 h-8" />,
+    videoUrl: "https://www.youtube.com/watch?v=EOoUHUZBwns", // Misol uchun
     facts: [
       "Yilda 4 ta fasl bor: qish, bahor, yoz, kuz",
       "Qish - eng sovuq fasl, qor yog'adi",
@@ -285,6 +291,7 @@ const topicsData: TopicData[] = [
     color: "#457B9D",
     gradient: "from-sky-400 to-blue-600",
     icon: <Compass className="w-8 h-8" />,
+    videoUrl: "https://www.youtube.com/watch?v=xZq_c8gnpR8", // Misol uchun
     facts: [
       "Dunyo tomonlari: shimol, janub, sharq, g'arb",
       "Quyosh sharqdan chiqib, g'arbga botadi",
@@ -330,6 +337,7 @@ const topicsData: TopicData[] = [
     color: "#E76F51",
     gradient: "from-orange-400 to-red-500",
     icon: <CloudRain className="w-8 h-8" />,
+    videoUrl: "https://www.youtube.com/watch?v=2dI31sJRQpU", // Misol uchun
     facts: [
       "Toshqin - suv sathi ko'tarilib, qirg'oqlardan toshib ketishi",
       "Zilzila - yer ostida plitalar harakatlanishi natijasida",
@@ -375,6 +383,7 @@ const topicsData: TopicData[] = [
     color: "#FFE66D",
     gradient: "from-yellow-400 to-amber-500",
     icon: <Zap className="w-8 h-8" />,
+    videoUrl: "https://www.youtube.com/watch?v=JJ63mXWoZPQ", // Misol uchun
     facts: [
       "Energiya bizga harakat qilish imkonini beradi",
       "Quyosh - eng katta energiya manbai",
@@ -420,6 +429,7 @@ const topicsData: TopicData[] = [
     color: "#2d6a4f",
     gradient: "from-green-500 to-emerald-600",
     icon: <TreePine className="w-8 h-8" />,
+    videoUrl: "https://www.youtube.com/watch?v=X6vjlYshsq0", // Misol uchun
     facts: [
       "Jonli tabiat: o'sadi, ko'payadi, nafas oladi",
       "Jonli: daraxt, gul, qush, mushuk, baliq, odam",
@@ -465,6 +475,7 @@ const topicsData: TopicData[] = [
     color: "#1a936f",
     gradient: "from-emerald-500 to-green-600",
     icon: <Recycle className="w-8 h-8" />,
+    videoUrl: "https://www.youtube.com/watch?v=P9qNn89Q4J0", // Misol uchun
     facts: [
       "Ekologiya - tabiatni o'rganuvchi fan",
       "Daraxtlar havoni tozalaydi",
@@ -505,6 +516,32 @@ const topicsData: TopicData[] = [
 
 // Floating emoji decorations for header
 const EMOJIS = ['🌟','🦋','🌈','🚀','🎨','🦄','🌺','⭐','🎯','🍀','🌙','🎪','🦁','🐬','🌸'];
+
+// YouTube video ID ni URL dan ajratib olish funksiyasi
+const getYouTubeVideoId = (url: string): string | null => {
+  if (!url) return null;
+  
+  // youtube.com/watch?v=VIDEO_ID
+  const regExp1 = /^.*((youtu.be\/)|(v\/)|(\/u\/\w\/)|(embed\/)|(watch\?))\??v?=?([^#&?]*).*/;
+  const match1 = url.match(regExp1);
+  if (match1 && match1[7].length === 11) {
+    return match1[7];
+  }
+  
+  // youtu.be/VIDEO_ID
+  const regExp2 = /^.*youtu\.be\/([^#&?]*).*/;
+  const match2 = url.match(regExp2);
+  if (match2 && match2[1].length === 11) {
+    return match2[1];
+  }
+  
+  // Agar URL da faqat ID bo'lsa
+  if (url.length === 11 && /^[a-zA-Z0-9_-]+$/.test(url)) {
+    return url;
+  }
+  
+  return null;
+};
 
 // ============ MAIN APP ============
 export default function App() {
@@ -673,7 +710,7 @@ export default function App() {
               letterSpacing: '-1px'
             }}
           >
-            Tabiiy Fanlar
+            Tabiiy fanlar
           </h1>
 
           {/* Fun subtitle with bouncing letters feel */}
@@ -861,6 +898,31 @@ export default function App() {
               </div>
             ))}
           </div>
+
+          {/* Video Section - Faktlar bo'limi ostida */}
+          {topic.videoUrl && (() => {
+            const videoId = getYouTubeVideoId(topic.videoUrl);
+            return videoId ? (
+              <div className="mb-10">
+                <h2 className="text-xl font-bold text-gray-800 mb-6 flex items-center gap-2">
+                  <span className="text-2xl">🎥</span>
+                  Video Dars
+                </h2>
+                <div className="bg-white rounded-3xl shadow-lg overflow-hidden">
+                  <div className="relative w-full" style={{ paddingBottom: '56.25%' }}>
+                    <iframe
+                      className="absolute top-0 left-0 w-full h-full"
+                      src={`https://www.youtube.com/embed/${videoId}?rel=0&modestbranding=1`}
+                      title="YouTube video player"
+                      frameBorder="0"
+                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                      allowFullScreen
+                    />
+                  </div>
+                </div>
+              </div>
+            ) : null;
+          })()}
 
           {/* Activity Tabs */}
           <div className="bg-white rounded-3xl shadow-lg overflow-hidden">
